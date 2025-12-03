@@ -1,6 +1,6 @@
 {
-  "name": "PrésencePro",
-  "short_name": "PrésencePro",
+  "name": "Liste de Présence UCAO-Théatre",
+  "short_name": "Liste de Présence UCAO-Théatre",
   "description": "Application de gestion de présence",
   "start_url": "./index.html",
   "display": "standalone",
