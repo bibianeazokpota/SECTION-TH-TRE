@@ -1,6 +1,40 @@
 let membres=["ASSABOU Fadil Cocobe "];
 let data={};
-const passwordAdmin="1234";
+let passwordAdmin = localStorage.getItem("passwordAdmin") || "1234";
+// Enregistre le code dans le navigateur
+function setAdminCode() {
+  const newCode = document.getElementById("password").value.trim();
+  if(newCode === "") return alert("Le code ne peut pas être vide !");
+  passwordAdmin = newCode; // on met à jour la variable
+  localStorage.setItem("passwordAdmin", passwordAdmin); // on sauvegarde dans le navigateur
+  document.getElementById("adminMsg").innerText = "Code admin enregistré ✔";
+}
+
+// Voir / masquer le code
+function toggleVisibility(id) {
+  const field = document.getElementById(id);
+  field.type = field.type === "password" ? "text" : "password";
+}
+
+// Vérifier le code
+function checkCode() {
+  const entered = document.getElementById("codeToCheck").value;
+  const saved = localStorage.getItem("responsableCode");
+
+  if (!saved) {
+    document.getElementById("result").innerText = "Aucun code enregistré.";
+    return;
+  }
+
+  if (entered === saved) {
+    document.getElementById("result").innerText = "✔ Code correct";
+    document.getElementById("result").style.color = "green";
+  } else {
+    document.getElementById("result").innerText = "❌ Code incorrect";
+    document.getElementById("result").style.color = "red";
+  }
+}
+
 
 function render(){
   const container=document.getElementById("members");

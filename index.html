@@ -44,6 +44,29 @@
     <button id="themeBtn">🌙</button>
     <button id="downloadBtn">⬇ Export</button>
   </div>
+<div class="code-container">
+  <h3>Définir / Modifier le code secret</h3>
+
+  <input id="secretCode" type="password" placeholder="Entrez le code secret">
+  <button onclick="toggleVisibility('secretCode')">👁️ Afficher / Masquer</button>
+
+  <button onclick="saveSecretCode()">Enregistrer le code</button>
+
+  <p id="savedMessage"></p>
+
+  <hr>
+
+  <h3>Vérification du code (test)</h3>
+
+  <input id="codeToCheck" type="password" placeholder="Entrez un code pour vérifier">
+  <button onclick="toggleVisibility('codeToCheck')">👁️ Afficher / Masquer</button>
+
+  <button onclick="checkCode()">Vérifier</button>
+
+  <p id="result"></p>
+</div>
+
+
 </header>
 
 <!-- ====================== -->
