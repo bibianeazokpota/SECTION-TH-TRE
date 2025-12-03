@@ -1,4 +1,4 @@
-let membres=["Afi Adjo","Bio Ali","Cèdric Lawson","Dona Chabi","Mivon Douho"];
+let membres=["ASSABOU Fadil Cocobe "];
 let data={};
 const passwordAdmin="1234";
 
