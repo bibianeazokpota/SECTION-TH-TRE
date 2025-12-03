@@ -1,55 +1,79 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Liste de Présence Section Théatre</title>
-<link rel="stylesheet" href="style.css" />
-<link rel="manifest" href="manifest.json" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liste de Présence UCAO-Théatre</title>
+
+<!-- ====================== -->
+<!--     ICÔNES DU SITE     -->
+<!-- ====================== -->
+<link rel="icon" href="icon-512.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-512.png">
+
+<!-- ====================== -->
+<!--        MANIFEST        -->
+<!-- ====================== -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3c40c6">
+
+<!-- ====================== -->
+<!--          STYLE         -->
+<!-- ====================== -->
+<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
-<!-- SPLASH (sera caché après chargement) -->
+<!-- ====================== -->
+<!--      SPLASH SCREEN     -->
+<!-- ====================== -->
 <div id="splash" class="splash">
-  <div class="splash-content">
-    <img src="icon.svg" alt="logo" class="splash-logo"/>
-    <h1>Liste De Présence</h1>
-    <p>Chargement…</p>
-  </div>
+    
+  <img src="icon-512.png" alt="Logo" class="splash-logo">
+
+  <h1>Liste de Présence UCAO-Théatre</h1>
+  <p>Chargement...</p>
 </div>
 
-<!-- TOPBAR -->
-<div class="topbar">
-  <div class="left">
-    <h2>📋 Liste de Présence Section Théatre</h2>
-    <p id="date-box"></p>
+<!-- ====================== -->
+<!--        TOP BAR         -->
+<!-- ====================== -->
+<header class="topbar">
+  <h2>📋 Liste de Présence UCAO-Théatre</h2>
+  <div>
+    <button id="themeBtn">🌙</button>
+    <button id="downloadBtn">⬇ Export</button>
   </div>
-  <div class="right">
-    <button id="downloadBtn" title="Exporter (Excel/CSV)">⬇️ Export</button>
-    <button id="themeBtn" title="Mode sombre / clair">🌙</button>
-  </div>
-</div>
+</header>
 
-<!-- Zone mot de passe -->
-<section class="login-box">
-  <input type="password" id="password" placeholder="Mot de passe Responsable" />
+<!-- ====================== -->
+<!--   LOGIN RESPONSABLE    -->
+<!-- ====================== -->
+<section class="login">
+  <input type="password" id="password" placeholder="Mot de passe Responsable">
 </section>
 
-<!-- Contenu principal -->
-<main id="main">
-  <section id="members"></section>
+<!-- ====================== -->
+<!--     LISTE MEMBRES      -->
+<!-- ====================== -->
+<main id="members"></main>
 
-  <div class="actions-footer">
-    <button id="resetData" class="danger">Réinitialiser la journée</button>
-    <button id="addMember">+ Ajouter un membre</button>
-  </div>
-</main>
+<!-- ====================== -->
+<!--     ACTIONS FOOTER     -->
+<!-- ====================== -->
+<footer class="footer-actions">
+  <button id="addMember">+ Ajouter un membre</button>
+  <button id="resetData" class="danger">Réinitialiser</button>
+</footer>
 
-<!-- Modal Ajouter -->
+<!-- ====================== -->
+<!--   MODAL AJOUT MEMBRE   -->
+<!-- ====================== -->
 <div id="modalAdd" class="modal hidden">
   <div class="modal-card">
     <h3>Ajouter un membre</h3>
-    <input id="newName" placeholder="Nom & Prénom" />
+    <input id="newName" placeholder="Nom & Prénom">
     <div class="modal-actions">
       <button id="saveNew">Enregistrer</button>
       <button id="cancelNew" class="danger">Annuler</button>
@@ -57,22 +81,20 @@
   </div>
 </div>
 
+<!-- ====================== -->
+<!--        SCRIPTS         -->
+<!-- ====================== -->
 <script src="app.js"></script>
 <script>
-  // register SW
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(()=>console.log('SW enregistré'))
-      .catch(e=>console.warn('SW erreur', e));
-  }
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('splash').classList.add('hidden'), 800);
+});
 
-  // hide splash after load
-  window.addEventListener('load', () => {
-    setTimeout(()=> {
-      const s = document.getElementById('splash');
-      if(s) s.classList.add('hidden');
-    }, 800);
-  });
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log('Service Worker actif'));
+}
 </script>
+
 </body>
 </html>

@@ -1,20 +1,13 @@
 {
-  "name": "Présence Mobile Pro",
+  "name": "PrésencePro",
   "short_name": "PrésencePro",
-  "start_url": "index.html",
+  "description": "Application de gestion de présence",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#3c40c6",
   "theme_color": "#3c40c6",
-  "icons": [
-    {
-      "src": "icon.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+  "icons":[
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png"}
   ]
 }

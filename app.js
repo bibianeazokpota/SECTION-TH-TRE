@@ -1,49 +1,25 @@
-/* ====== CONFIG / MEMBRES ====== */
-let membres = JSON.parse(localStorage.getItem('presence_members')) || [
-  "Afi Adjo","Bio Ali","Cèdric Lawson","Dona Chabi","Mivon Douho"
-];
+let membres=["Afi Adjo","Bio Ali","Cèdric Lawson","Dona Chabi","Mivon Douho"];
+let data={};
+const passwordAdmin="1234";
 
-const passwordAdmin = "1234"; // change-le pour la production
-let data = JSON.parse(localStorage.getItem("presencePro")) || {};
-let theme = localStorage.getItem("presence_theme") || "light";
-
-/* ====== THEME ====== */
-function applyTheme() {
-  if(theme === "dark") document.documentElement.setAttribute('data-theme','dark');
-  else document.documentElement.removeAttribute('data-theme');
-  document.getElementById('themeBtn').innerText = theme==='dark'?'☀️':'🌙';
-}
-document.getElementById('themeBtn').addEventListener('click', ()=>{
-  theme = theme === "dark" ? "light" : "dark";
-  localStorage.setItem('presence_theme', theme);
-  applyTheme();
-});
-applyTheme();
-
-/* ====== DATE BOX ====== */
-function loadInfos(){
-  const now = new Date();
-  const jours=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
-  document.getElementById('date-box').innerText = `${jours[now.getDay()]}, ${now.toLocaleDateString('fr-FR')} • ${now.toLocaleTimeString('fr-FR')}`;
-}
-setInterval(loadInfos,1000);
-loadInfos();
-
-/* ====== RENDER CARDS ====== */
 function render(){
-  const container = document.getElementById('members');
-  container.innerHTML = '';
+  const container=document.getElementById("members");
+  container.innerHTML="";
   membres.forEach((nom,i)=>{
-    const statut = data[nom] ? data[nom].statut : 'Aucun';
-    const heure = data[nom] ? data[nom].heure : '—';
-    const card = document.createElement('article');
-    card.className = 'card';
-    card.innerHTML = `
+    const statut=data[nom]?data[nom].statut:"Aucun";
+    const heure=data[nom]?data[nom].heure:"—";
+    const card=document.createElement("div");
+    card.className="card";
+    if(statut==="Présent") card.classList.add("present");
+    else if(statut==="Absent") card.classList.add("absent");
+    else if(statut==="Permission") card.classList.add("permission");
+
+    card.innerHTML=`
       <div>
         <h3>${i+1}. ${nom}</h3>
         <div class="meta">
           <span class="status ${statut.toLowerCase()}">${statut}</span>
-          <div>Heure : <strong>${heure}</strong></div>
+          <div>Heure: <strong>${heure}</strong></div>
         </div>
       </div>
       <div class="controls">
@@ -55,57 +31,44 @@ function render(){
     container.appendChild(card);
   });
 }
-window.render = render;
+window.render=render;
 render();
 
-/* ====== SET STATUS (requiert mot de passe) ====== */
-function setStatus(nom, statut) {
-  const pwd = document.getElementById('password').value;
-  if(pwd !== passwordAdmin) { alert('Mot de passe incorrect !'); return; }
-  data[nom] = { statut, heure: new Date().toLocaleTimeString('fr-FR'), date: new Date().toLocaleDateString('fr-FR') };
-  localStorage.setItem('presencePro', JSON.stringify(data));
+function setStatus(nom,statut){
+  const pwd=document.getElementById("password").value;
+  if(pwd!==passwordAdmin){alert("Mot de passe incorrect !");return;}
+  data[nom]={statut,heure:new Date().toLocaleTimeString()};
   render();
 }
 
-/* ====== EXPORT CSV (lisible avec Excel) ====== */
-function exportCSV(){
-  // entêtes
-  const headers = ['Nom','Statut','Date','Heure'];
-  const rows = membres.map(nom => {
-    const d = data[nom] || { statut:'Aucun', heure:'', date:'' };
-    return [nom, d.statut, d.date || '', d.heure || ''];
+document.getElementById("downloadBtn").addEventListener("click",()=>{
+  const headers=["Nom","Statut","Heure"];
+  const rows=membres.map(nom=>{
+    const d=data[nom]||{statut:"Aucun",heure:""};
+    return [nom,d.statut,d.heure];
   });
+  const csv=[headers,...rows].map(r=>r.join(",")).join("\r\n");
+  const blob=new Blob([csv],{type:"text/csv"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="presence.csv";
+  a.click();
+});
 
-  const csvArray = [headers, ...rows].map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\r\n');
-  const blob = new Blob([csvArray], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `presence_${new Date().toISOString().slice(0,10)}.csv`;
-  document.body.appendChild(a); a.click(); a.remove();
-  URL.revokeObjectURL(url);
-}
-document.getElementById('downloadBtn').addEventListener('click', exportCSV);
-
-/* ====== AJOUT / RESET MEMBRES ====== */
-document.getElementById('addMember').addEventListener('click', ()=>{ document.getElementById('modalAdd').classList.remove('hidden'); document.getElementById('newName').value='';});
-document.getElementById('cancelNew').addEventListener('click', ()=> document.getElementById('modalAdd').classList.add('hidden'));
-document.getElementById('saveNew').addEventListener('click', ()=>{
-  const name = document.getElementById('newName').value.trim();
-  if(!name){ alert('Nom vide'); return; }
+document.getElementById("addMember").addEventListener("click",()=>document.getElementById("modalAdd").classList.remove("hidden"));
+document.getElementById("cancelNew").addEventListener("click",()=>document.getElementById("modalAdd").classList.add("hidden"));
+document.getElementById("saveNew").addEventListener("click",()=>{
+  const name=document.getElementById("newName").value.trim();
+  if(!name)return alert("Nom vide !");
   membres.push(name);
-  localStorage.setItem('presence_members', JSON.stringify(membres));
-  render();
-  document.getElementById('modalAdd').classList.add('hidden');
-});
-
-/* RESET journée */
-document.getElementById('resetData').addEventListener('click', ()=>{
-  if(!confirm('Réinitialiser les présences pour aujourd\'hui ?')) return;
-  data = {};
-  localStorage.setItem('presencePro', JSON.stringify(data));
+  document.getElementById("modalAdd").classList.add("hidden");
   render();
 });
-
-/* expose setStatus pour onclick in HTML */
-window.setStatus = setStatus;
+document.getElementById("resetData").addEventListener("click",()=>{
+  if(confirm("Réinitialiser la journée ?")){data={};render();}
+});
+document.getElementById("themeBtn").addEventListener("click",()=>{
+  const current=document.documentElement.getAttribute("data-theme");
+  if(current==="dark"){document.documentElement.removeAttribute("data-theme");}
+  else{document.documentElement.setAttribute("data-theme","dark");}
+});
