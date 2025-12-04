@@ -1,123 +1,100 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liste de Présence UCAO-Théatre</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste de Présence UCAO-Théatre</title>
 
-<!-- ====================== -->
-<!--     ICÔNES DU SITE     -->
-<!-- ====================== -->
- 
-<link rel="icon" href="icon-512.png" type="icon-512.png">
-<link rel="apple-touch-icon" href="icon-512.png">
+  <!-- ICÔNES -->
+  <link rel="icon" href="icon-512.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-512.png">
 
-<!-- ====================== -->
-<!--        MANIFEST        -->
-<!-- ====================== -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#3c40c6">
+  <!-- MANIFEST -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3c40c6">
 
-<!-- ====================== -->
-<!--          STYLE         -->
-<!-- ====================== -->
-<link rel="stylesheet" href="style.css">
-
+  <!-- STYLE -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ====================== -->
-<!--      SPLASH SCREEN     -->
-<!-- ====================== -->
-<div id="splash" class="splash">
-  <img src="icon-512.png" alt="Logo" class="splash-logo">
-
-  <h1>Liste de Présence UCAO-Théatre</h1>
-  <p>Chargement...</p>
-</div>
-
-<!-- ====================== -->
-<!--        TOP BAR         -->
-<!-- ====================== -->
-<header class="topbar">
-  <h2>📋 Liste de Présence UCAO-Théatre</h2>
-  <div>
-    <button id="themeBtn">🌙</button>
-    <button id="downloadBtn">⬇ Export</button>
+  <!-- SPLASH SCREEN -->
+  <div id="splash" class="splash">
+    <img src="icon-512.png" alt="Logo" class="splash-logo">
+    <h1>Liste de Présence UCAO-Théatre</h1>
+    <p>Chargement...</p>
   </div>
-<div class="code-container">
-  <h3>Définir / Modifier le code secret</h3>
 
-  <input id="secretCode" type="password" placeholder="Entrez le code secret">
-  <button onclick="toggleVisibility('secretCode')">👁️ Afficher / Masquer</button>
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <h2>📋 Liste de Présence UCAO-Théatre</h2>
 
-  <button onclick="saveSecretCode()">Enregistrer le code</button>
+    <div class="topbar-buttons">
+      <button id="themeBtn">🌙</button>
+      <button id="downloadBtn">⬇ Export</button>
+    </div>
 
-  <p id="savedMessage"></p>
+    <div class="code-container">
+      <h3>Définir / Modifier le code secret</h3>
+      <input id="secretCode" type="password" placeholder="Entrez le code secret">
+      <button onclick="toggleVisibility('secretCode')">👁️</button>
+      <button onclick="saveSecretCode()">Enregistrer</button>
 
-  <hr>
+      <hr>
 
-  <h3>Vérification du code (test)</h3>
+      <h3>Vérifier un code</h3>
+      <input id="codeToCheck" type="password" placeholder="Entrez un code">
+      <button onclick="toggleVisibility('codeToCheck')">👁️</button>
+      <button onclick="checkCode()">Vérifier</button>
+      <p id="result"></p>
+    </div>
 
-  <input id="codeToCheck" type="password" placeholder="Entrez un code pour vérifier">
-  <button onclick="toggleVisibility('codeToCheck')">👁️ Afficher / Masquer</button>
+    <!-- MENU PAGES -->
+    <div class="pages-menu">
+      <button onclick="changePage(-1)">⬅ Page précédente</button>
+      <select id="pageSelector" onchange="jumpToPage(this.value)"></select>
+      <button onclick="changePage(1)">Page suivante ➡</button>
+      <span id="pageLabel">Page 1</span>
+    </div>
+  </header>
 
-  <button onclick="checkCode()">Vérifier</button>
+  <!-- LOGIN RESPONSABLE -->
+  <section class="login">
+    <input type="password" id="password" placeholder="Mot de passe Responsable">
+  </section>
 
-  <p id="result"></p>
-</div>
+  <!-- LISTE MEMBRES -->
+  <main id="members"></main>
 
+  <!-- ACTIONS FOOTER -->
+  <footer class="footer-actions">
+    <button id="addMember">+ Ajouter un membre</button>
+    <button id="resetData" class="danger">Réinitialiser</button>
+  </footer>
 
-</header>
-
-<!-- ====================== -->
-<!--   LOGIN RESPONSABLE    -->
-<!-- ====================== -->
-<section class="login">
-  <input type="password" id="password" placeholder="Mot de passe Responsable">
-</section>
-
-<!-- ====================== -->
-<!--     LISTE MEMBRES      -->
-<!-- ====================== -->
-<main id="members"></main>
-
-<!-- ====================== -->
-<!--     ACTIONS FOOTER     -->
-<!-- ====================== -->
-<footer class="footer-actions">
-  <button id="addMember">+ Ajouter un membre</button>
-  <button id="resetData" class="danger">Réinitialiser</button>
-</footer>
-
-<!-- ====================== -->
-<!--   MODAL AJOUT MEMBRE   -->
-<!-- ====================== -->
-<div id="modalAdd" class="modal hidden">
-  <div class="modal-card">
-    <h3>Ajouter un membre</h3>
-    <input id="newName" placeholder="Nom & Prénom">
-    <div class="modal-actions">
-      <button id="saveNew">Enregistrer</button>
-      <button id="cancelNew" class="danger">Annuler</button>
+  <!-- MODAL AJOUT MEMBRE -->
+  <div id="modalAdd" class="modal hidden">
+    <div class="modal-card">
+      <h3>Ajouter un membre</h3>
+      <input id="newName" placeholder="Nom & Prénom">
+      <div class="modal-actions">
+        <button id="saveNew">Enregistrer</button>
+        <button id="cancelNew" class="danger">Annuler</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ====================== -->
-<!--        SCRIPTS         -->
-<!-- ====================== -->
-<script src="app.js"></script>
-<script>
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('splash').classList.add('hidden'), 800);
-});
+  <!-- SCRIPTS -->
+  <script src="app.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => document.getElementById('splash').classList.add('hidden'), 800);
+    });
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log('Service Worker actif'));
-}
-</script>
-
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('Service Worker actif'));
+    }
+  </script>
 </body>
 </html>
