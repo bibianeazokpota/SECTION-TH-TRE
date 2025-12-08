@@ -1,13 +1,17 @@
+
 {
-  "name": "Liste de Présence UCAO-Théatre",
-  "short_name": "Liste de Présence UCAO-Théatre",
-  "description": "Application de gestion de présence",
+  "name": "Liste de Présence UCAO-Théâtre",
+  "short_name": "UCAO-Théâtre",
+  "description": "Application de gestion de présence des participants",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#3c40c6",
-  "theme_color": "#3c40c6",
-  "icons":[
-    {"src":"icon-192.png","sizes":"192x192","type":"image/png"},
-    {"src":"icon-512.png","sizes":"512x512","type":"image/png"}
+  "orientation": "portrait",
+  "background_color": "#7CFC00",
+  "theme_color": "#7CFC00",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

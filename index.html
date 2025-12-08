@@ -11,21 +11,21 @@
 
   <!-- MANIFEST -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#3c40c6">
+  <meta name="theme-color" content="#2ecc71">
 
-  <!-- STYLE -->
+  <!-- STYLE CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- SPLASH SCREEN -->
+  <!-- SPLASH -->
   <div id="splash" class="splash">
     <img src="icon-512.png" alt="Logo" class="splash-logo">
     <h1>Liste de Présence UCAO-Théatre</h1>
     <p>Chargement...</p>
   </div>
 
-  <!-- TOP BAR -->
+  <!-- TOPBAR -->
   <header class="topbar">
     <h2>📋 Liste de Présence UCAO-Théatre</h2>
 
@@ -34,24 +34,30 @@
       <button id="downloadBtn">⬇ Export</button>
     </div>
 
+    <!-- ADMIN CODE -->
     <div class="code-container">
       <h3>Définir / Modifier le code secret</h3>
-      <input id="secretCode" type="password" placeholder="Entrez le code secret">
-      <button onclick="toggleVisibility('secretCode')">👁️</button>
+
+      <div class="input-wrapper">
+        <input id="secretCode" type="password" placeholder="Entrez le code secret">
+        <button type="button" onclick="toggleVisibility('secretCode')">👁️</button>
+      </div>
+
       <button onclick="saveSecretCode()">Enregistrer</button>
 
       <hr>
 
       <h3>Vérifier un code</h3>
-<div class="input-wrapper">
-  <input id="codeToCheck" type="password" placeholder="Entrez un code">
-  <button type="button" onclick="toggleVisibility('codeToCheck')" class="eye-btn">👁️</button>
-</div>
-<button onclick="checkCode()">Vérifier</button>
-<p id="result"></p>
+      <div class="input-wrapper">
+        <input id="codeToCheck" type="password" placeholder="Entrez un code">
+        <button type="button" onclick="toggleVisibility('codeToCheck')">👁️</button>
+      </div>
 
+      <button onclick="checkCode()">Vérifier</button>
+      <p id="result"></p>
+    </div>
 
-    <!-- MENU PAGES -->
+    <!-- PAGES -->
     <div class="pages-menu">
       <button onclick="changePage(-1)">⬅ Page précédente</button>
       <select id="pageSelector" onchange="jumpToPage(this.value)"></select>
@@ -60,21 +66,21 @@
     </div>
   </header>
 
-  <!-- LOGIN RESPONSABLE -->
+  <!-- RESPONSABLE -->
   <section class="login">
     <input type="password" id="password" placeholder="Mot de passe Responsable">
   </section>
 
-  <!-- LISTE MEMBRES -->
+  <!-- MEMBRES -->
   <main id="members"></main>
 
-  <!-- ACTIONS FOOTER -->
+  <!-- FOOTER -->
   <footer class="footer-actions">
     <button id="addMember">+ Ajouter un membre</button>
     <button id="resetData" class="danger">Réinitialiser</button>
   </footer>
 
-  <!-- MODAL AJOUT MEMBRE -->
+  <!-- MODAL -->
   <div id="modalAdd" class="modal hidden">
     <div class="modal-card">
       <h3>Ajouter un membre</h3>
@@ -86,7 +92,7 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
+  <!-- JavaScript -->
   <script src="app.js"></script>
   <script>
     window.addEventListener('load', () => {
@@ -98,5 +104,6 @@
         .then(() => console.log('Service Worker actif'));
     }
   </script>
+
 </body>
 </html>

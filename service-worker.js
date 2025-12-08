@@ -1,16 +1,39 @@
-const CACHE = "presence-pro-v2";
-const FILES = [
+const CACHE = "Liste de Présence UCAO-UP";
+
+const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
   "./manifest.json",
-  "./icon.svg"
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
 
-self.addEventListener("install", evt => {
-  evt.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)));
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE).then(cache => cache.addAll(FILES_TO_CACHE))
+  );
+  self.skipWaiting();
 });
-self.addEventListener("fetch", evt => {
-  evt.respondWith(caches.match(evt.request).then(resp => resp || fetch(evt.request)));
+
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys
+          .filter(key => key !== CACHE)
+          .map(key => caches.delete(key))
+      )
+    )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request).then(response =>
+      response || fetch(event.request)
+    )
+  );
 });
