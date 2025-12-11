@@ -1,4 +1,4 @@
-const CACHE = "ucaotheatre-presence-v1";
+const CACHE = "ucaotheatre-presence-v2";
 
 const FILES_TO_CACHE = [
   "./",
@@ -31,11 +31,43 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
-// FETCH : OFFLINE ET CACHE
-self.addEventListener("fetch", event => {
+// FETCH : strategy network-first for app shell, cache-first for other assets
+self.addEventListener('fetch', event => {
+  const req = event.request;
+  // network-first for navigation and core files (HTML/JS/CSS)
+  const url = new URL(req.url);
+  const isSameOrigin = url.origin === self.location.origin;
+  const shouldNetworkFirst = isSameOrigin && (
+    req.mode === 'navigate' ||
+    req.destination === 'document' ||
+    req.destination === 'script' ||
+    req.destination === 'style' ||
+    url.pathname.endsWith('.html') ||
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.css')
+  );
+
+  if (shouldNetworkFirst) {
+    event.respondWith(
+      caches.open(CACHE).then(async cache => {
+        try {
+          const response = await fetch(req);
+          if (response && response.status === 200) cache.put(req, response.clone());
+          return response;
+        } catch (err) {
+          const cached = await cache.match(req) || await caches.match('./offline.html');
+          return cached;
+        }
+      })
+    );
+    return;
+  }
+
+  // For other requests, try cache first then network
   event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
-      .catch(() => caches.match("./offline.html")) // fallback si offline
+    caches.match(req).then(cached => cached || fetch(req).then(resp => {
+      // optionally cache fetched asset
+      return resp;
+    })).catch(() => caches.match('./offline.html'))
   );
 });

@@ -8,6 +8,14 @@
   --present: #d4f8d4;
   --absent: #ffd6d6;
   --permission: #fff4c2;
+
+  /* Cahier / papier */
+  --paper: #fffef6;
+  --line: rgba(3,78,162,0.10);
+  --margin-line: rgba(255,0,0,0.12);
+  --btn-present: #28a745;
+  --btn-absent: #e04b4b;
+  --btn-permission: #f4d35e;
 }
 
 [data-theme="dark"] {
@@ -21,18 +29,26 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: var(--bg);
+  background-color: var(--paper);
+  /* vertical red margin + horizontal ruling lines */
+  background-image:
+    linear-gradient(to right, transparent 56px, var(--margin-line) 56px, transparent 57px),
+    repeating-linear-gradient(to bottom, var(--line) 0px, var(--line) 1px, transparent 1px, transparent 28px);
+  background-size: auto, 100% 28px;
   color: var(--text);
 }
 
 /* CODE CONTAINER */
 .code-container {
-  background: #f5f5f5;
-  padding: 20px;
-  width: 350px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  background: transparent;
+  padding: 6px 56px;
+  width: auto;
+  max-width: none;
+  border-radius: 0;
+  box-shadow: none;
   font-family: Arial;
+  border: none;
+  margin: 6px 0;
 }
 
 input {
@@ -64,27 +80,28 @@ input {
   right: 5px;
   top: 50%;
   transform: translateY(-50%);
-  border: none;
+  border: 1px solid rgba(0,0,0,0.06);
   background: transparent;
   cursor: pointer;
-  font-size: 18px;
-  padding: 0;
-  color: #666;
+  font-size: 16px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  color: var(--muted);
 }
 
 
 button {
   margin-bottom: 10px;
   padding: 8px 12px;
-  border: none;
   border-radius: 6px;
-  background: #3cb371;
-  color: white;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: transparent;
+  color: var(--text);
   cursor: pointer;
 }
 
 button:hover {
-  background: #2e8b57;
+  filter: brightness(.98);
 }
 
 /* MENU PAGES - STYLE CAHIER */
@@ -124,6 +141,51 @@ button:hover {
   text-align: center;
 }
 
+/* Professional styles for code-container actions */
+.code-container h3 { margin: 0 0 8px 0; font-size: 15px; }
+.code-container p { margin: 6px 0; color: var(--muted); }
+.code-container .controls-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+.code-container .controls-row .btn { padding: 8px 12px; }
+
+/* Professional small framed fields inside the code-container */
+.code-container .field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.92);
+  margin-top: 8px;
+}
+.code-container .field input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  padding: 6px 4px;
+  font-size: 14px;
+}
+.code-container .field .btn.btn-secondary {
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* Align action buttons on same row */
+.code-container .actions { display:flex; gap:8px; margin-top:10px; align-items:center; }
+
+/* Result message styling retained */
+#result { display:inline-block; margin-top:10px; padding:8px 12px; border-radius:8px; font-weight:600; }
+
+/* result messages */
+#result { display:inline-block; margin-top:10px; padding:8px 12px; border-radius:8px; font-weight:600; }
+.result.success { background: #e9f7ee; color: #0a6d0a; border: 1px solid #cfeeda; }
+.result.error { background: #fff0f0; color: #c40808; border: 1px solid #f2c5c5; }
+
+/* Make eye button inside input appear smaller when using .btn classes */
+.input-wrapper .btn.btn-secondary { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); padding: 6px 8px; border-radius: 8px; }
+
+
 /* SPLASH SCREEN */
 .splash {
   position: fixed;
@@ -150,14 +212,46 @@ button:hover {
   margin-bottom: 10px;
 }
 
+/* Notification banner (top, non-blocking) */
+.banner {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.banner .banner-inner {
+  pointer-events: auto;
+  max-width: 840px;
+  width: auto;
+  background: rgba(255,255,255,0.98);
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(20,20,40,0.12);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.banner.hidden { display: none; }
+.banner.show { display: flex; }
+.banner .banner-message { font-weight:600; color:var(--text); }
+.banner .banner-close { background: transparent; border: none; font-size: 14px; cursor: pointer; color:var(--muted); }
+.banner.success .banner-inner { background: #e9f7ee; border-color: #cfeeda; color: #0a6d0a; }
+.banner.error .banner-inner { background: #fff4f4; border-color: #f2c5c5; color: #b00; }
+.banner.info .banner-inner { background: #f3f8ff; border-color: #d0e4ff; color: #034; }
+
 /* TOPBAR */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 20px;
-  background: linear-gradient(135deg, var(--accent), #b2f7c2);
-  color: #fff;
+  background: transparent;
+  color: var(--text);
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -167,12 +261,19 @@ button:hover {
   font-size: 18px;
 }
 
-.topbar button {
+.topbar button:not(.btn) {
   margin-left: 8px;
   padding: 6px 10px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: transparent;
+  color: var(--text);
   cursor: pointer;
+}
+
+.topbar .btn {
+  margin-left: 8px;
+  padding: 6px 10px;
 }
 
 .login {
@@ -208,6 +309,13 @@ main {
 .card.absent { background-color: var(--absent); }
 .card.permission { background-color: var(--permission); }
 
+/* visible colored border for each status */
+.card { border: 1px solid transparent; }
+.card.present { border-left: 6px solid var(--btn-present); }
+.card.absent { border-left: 6px solid var(--btn-absent); }
+.card.permission { border-left: 6px solid var(--btn-permission); }
+.card { transition: border-color .18s ease, box-shadow .18s ease; }
+
 .card h3 { margin: 0; font-size: 16px; }
 
 .meta { font-size: 13px; color: var(--muted); }
@@ -230,24 +338,291 @@ main {
   gap: 6px;
 }
 
+/* Role select / badge */
+.role-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+.role-badge {
+  padding:6px 8px;
+  border-radius:8px;
+  font-weight:700;
+  color:#422d00;
+  background: linear-gradient(180deg, #fff8e6 0%, #ffefc2 100%);
+  border: 1px solid #d4af37; /* gold */
+  box-shadow: 0 2px 8px rgba(212,175,55,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+
+/* Special styling for Chef de section */
+.role-badge.chef {
+  background: linear-gradient(180deg, #fff4d9 0%, #ffe29a 100%);
+  border: 1px solid #c7911a;
+  color: #3b2a00;
+  box-shadow: 0 6px 18px rgba(199,145,26,0.12), inset 0 1px 0 rgba(255,255,255,0.5);
+  padding: 8px 10px;
+  font-size: 0.95rem;
+}
+.role-select { padding:6px 8px; border-radius:8px; border:1px solid rgba(0,0,0,0.08); background:#fff; }
+.sheet .role-select { min-width:150px; }
+/* Boutons de statut (classes explicites) */
+.card .controls .btn {
+  display: inline-block;
+  padding: 10px 14px;
+  min-width: 110px;
+  border-radius: 10px; /* like .login input */
+  border: 1px solid rgba(0,0,0,0.10); /* same strength as login input */
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  background-clip: padding-box;
+}
+.card .controls button.btn-present,
+.card .controls .btn.btn-present,
+button.btn-present {
+  background: var(--btn-present);
+  border-color: rgba(0,0,0,0.10);
+  color: #fff;
+}
+.card .controls button.btn-present:hover,
+.card .controls .btn.btn-present:hover,
+button.btn-present:hover,
+button.btn-present:focus,
+button.btn-present:active {
+  background: #218838;
+}
+
+.card .controls button.btn-absent,
+.card .controls .btn.btn-absent,
+button.btn-absent {
+  background: var(--btn-absent);
+  border-color: rgba(0,0,0,0.10);
+  color: #fff;
+}
+.card .controls button.btn-absent:hover,
+.card .controls .btn.btn-absent:hover,
+button.btn-absent:hover,
+button.btn-absent:focus,
+button.btn-absent:active {
+  background: #c43b3b;
+}
+
+.card .controls button.btn-permission,
+.card .controls .btn.btn-permission,
+button.btn-permission {
+  background: var(--btn-permission);
+  border-color: rgba(0,0,0,0.10);
+  color: #222;
+}
+.card .controls button.btn-permission:hover,
+.card .controls .btn.btn-permission:hover,
+button.btn-permission:hover,
+button.btn-permission:focus,
+button.btn-permission:active {
+  background: #e2c84a;
+  color: #222;
+}
+
+/* Warning / attention button (yellow) */
+.btn-warning {
+  background: var(--btn-permission);
+  color: #222;
+  border: 1px solid rgba(0,0,0,0.10);
+}
+.btn-warning:hover { background: #e2c84a; }
+
+/* Ensure warning button keeps its color across states */
+button.btn-warning, .btn.btn-warning {
+  background: var(--btn-permission);
+  color: #222;
+}
+button.btn-warning:hover, button.btn-warning:focus, button.btn-warning:active,
+.btn.btn-warning:hover, .btn.btn-warning:focus, .btn.btn-warning:active {
+  background: #e2c84a;
+  color: #222;
+}
+
+/* Adjust main content to respect the left margin (cahier) */
+main, .code-container, .card {
+  margin-left: 56px;
+}
+
+/* Notebook layout: container and sheets (feuilles) */
+.notebook {
+  margin: 18px 56px 120px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.sheet {
+  background: var(--paper);
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(20,20,40,0.06);
+  overflow: visible;
+  transition: transform .28s ease, box-shadow .28s ease;
+  position: relative;
+}
+
+.sheet::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 56px;
+  background: linear-gradient(90deg, rgba(255,0,0,0.12) 56px, transparent 57px);
+  pointer-events: none;
+}
+
+.sheet-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding: 12px 16px;
+  background: transparent;
+}
+
+.sheet-title { font-weight:700; font-size:15px; }
+.sheet-summary { color:var(--muted); font-size:13px; }
+
+
+.sheet-content {
+  padding: 0 16px 14px 16px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .36s cubic-bezier(.2,.9,.2,1);
+}
+
+.sheet.open {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 34px rgba(20,20,40,0.12);
+}
+
+.sheet.open .sheet-content { max-height: 1200px; }
+
+.sheet .controls { flex-direction: row; gap:8px; }
+
+.sheet-toggle { background: transparent; border: 1px solid rgba(0,0,0,0.06); padding:6px 10px; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+.sheet-toggle::after { content: '▾'; display:inline-block; transition: transform .28s ease; }
+.sheet.open .sheet-toggle::after { transform: rotate(180deg); }
+
+/* small visual when closed to indicate clickable */
+.sheet:not(.open) .sheet-header { cursor: pointer; }
+
+/* Generic button utilities */
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #f5f5f5;
+  color: var(--text);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: rgba(0,0,0,0.06);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--text);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.btn-danger {
+  background: #d64545;
+  color: #fff;
+}
+
+/* Success (green) button */
+.btn-success {
+  background: var(--btn-present);
+  color: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active { background: #1f8a36; }
+
+/* Ensure reset button keeps green color intact across states with high specificity */
+#resetData.btn-success,
+.btn.btn-success#resetData {
+  background: var(--btn-present) !important;
+  color: #fff !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+#resetData.btn-success:hover,
+#resetData.btn-success:focus,
+#resetData.btn-success:active,
+.btn.btn-success#resetData:hover,
+.btn.btn-success#resetData:focus,
+.btn.btn-success#resetData:active {
+  background: #1f8a36 !important;
+  color: #fff !important;
+}
+
+/* Improved contrast & accessibility for all buttons */
+.btn {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.btn:focus, .btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(46,139,87,0.12);
+  transform: translateY(-1px);
+}
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--accent), #37d58a);
+  color: #ffffff;
+  border-color: rgba(0,0,0,0.08);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.12);
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  filter: brightness(.92);
+}
+
+/* Make warning/yellow more legible on light backgrounds */
+.btn-warning {
+  background: linear-gradient(180deg, var(--btn-permission), #f0cf4a);
+  color: #222;
+  border-color: rgba(0,0,0,0.08);
+  text-shadow: none;
+}
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active { filter: brightness(.95); }
+
+/* Ensure permission buttons inside cards keep clear text */
+.card .controls .btn-permission,
+button.btn-permission { color: #222; font-weight:700; }
+
+/* Disabled state */
+.btn[disabled], .btn.disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
 /* FOOTER */
 .footer-actions {
+  display: none;
+}
+
+/* Bottom fixed pages/action bar */
+.pages-menu.bottom-pages {
   position: fixed;
   bottom: 12px;
   left: 12px;
   right: 12px;
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
 }
+.pages-menu.bottom-pages .left-actions { display:flex; gap:8px; align-items:center; }
+.pages-menu.bottom-pages .page-nav { display:flex; gap:8px; align-items:center; }
 
 #addMember,
 #resetData {
   padding: 10px 14px;
   border-radius: 10px;
   border: none;
-  background: var(--accent);
-  color: #fff;
   cursor: pointer;
 }
 
@@ -288,3 +663,8 @@ main {
   gap: 8px;
   margin-top: 10px;
 }
+
+/* Confirm modal specific tweaks */
+#modalConfirm .modal-card { max-width: 420px; }
+#confirmMessage { color: var(--muted); margin-top: 6px; }
+#confirmTitle { margin: 0 0 6px 0; }
