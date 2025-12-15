@@ -43,29 +43,35 @@
   <div class="code-container">
     <h3>Définir / Modifier le code secret</h3>
 
-    <div class="input-wrapper">
-      <input id="secretCode" type="password" placeholder="Entrez le code secret">
-      <button type="button" class="btn btn-secondary" onclick="toggleVisibility('secretCode')">👁️</button>
-    </div>
+    <form onsubmit="saveSecretCode(); return false;">
+  <div class="input-wrapper">
+    <input id="secretCode" type="password" placeholder="Entrez le code secret">
+    <button type="button" class="btn btn-secondary" onclick="toggleVisibility('secretCode')">👁️</button>
+  </div>
 
-    <button class="btn btn-primary" onclick="saveSecretCode()">Enregistrer</button>
+  <button class="btn btn-primary" type="submit">Enregistrer</button>
+</form>
+
 
     <hr>
 
     <h3>Vérifier un code</h3>
-    <div class="input-wrapper">
-      <input id="codeToCheck" type="password" placeholder="Entrez un code">
-      <button type="button" class="btn btn-secondary" onclick="toggleVisibility('codeToCheck')">👁️</button>
-    </div>
-
-    <button class="btn btn-primary" onclick="checkCode()">Vérifier</button>
-    <p id="result">Entrez un code à vérifier</p>
+    <form onsubmit="checkCode(); return false;">
+  <div class="input-wrapper">
+    <input id="codeToCheck" type="password" placeholder="Entrez un code">
+    <button type="button" class="btn btn-secondary" onclick="toggleVisibility('codeToCheck')">👁️</button>
   </div>
+
+  <button class="btn btn-primary" type="submit">Vérifier</button>
+</form>
 
   <!-- RESPONSABLE -->
   <section class="login">
+  <form onsubmit="return false;">
     <input type="password" id="password" placeholder="Mot de passe Responsable">
-  </section>
+  </form>
+</section>
+
 
   <!-- MEMBRES -->
   <main id="members"></main>

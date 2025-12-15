@@ -668,3 +668,86 @@ button.btn-permission { color: #222; font-weight:700; }
 #modalConfirm .modal-card { max-width: 420px; }
 #confirmMessage { color: var(--muted); margin-top: 6px; }
 #confirmTitle { margin: 0 0 6px 0; }
+
+/* =========================
+   MOBILE APP NAVIGATION
+========================= */
+@media (max-width: 768px) {
+
+  .pages-menu.bottom-pages {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 8px 10px env(safe-area-inset-bottom);
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.08);
+    z-index: 999;
+  }
+
+  .pages-menu.bottom-pages .left-actions,
+  .pages-menu.bottom-pages .page-nav {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .pages-menu.bottom-pages button,
+  .pages-menu.bottom-pages select {
+    flex: 1;
+    min-height: 48px;
+    font-size: 14px;
+  }
+
+  main {
+    padding-bottom: 160px; /* espace pour la nav */
+  }
+}
+
+@media (max-width: 768px) {
+
+  .card {
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(20,20,40,.10);
+  }
+
+  .card h3 {
+    font-size: 17px;
+  }
+
+  .meta {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  button,
+  .btn {
+    border-radius: 14px;
+    font-weight: 700;
+  }
+
+  button:active,
+  .btn:active {
+    transform: scale(0.98);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .card {
+    animation: fadeUp .3s ease;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
