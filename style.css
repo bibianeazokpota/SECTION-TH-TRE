@@ -779,11 +779,28 @@ button.btn-permission { color: #222; font-weight:700; }
   }
 
   .card .controls .btn,
-  .card .controls button,
-  .pages-menu.bottom-pages .left-actions button,
-  .pages-menu.bottom-pages .page-nav button {
+  .card .controls button {
     width: 100% !important;
     min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* Keep footer/page buttons horizontal and flexible on small screens */
+  .pages-menu.bottom-pages {
+    flex-direction: row;
+    align-items: center;
+  }
+  .pages-menu.bottom-pages .left-actions,
+  .pages-menu.bottom-pages .page-nav {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .pages-menu.bottom-pages button,
+  .pages-menu.bottom-pages select {
+    width: auto !important;
+    flex: 1 1 auto;
+    min-width: 0;
     box-sizing: border-box;
   }
 
