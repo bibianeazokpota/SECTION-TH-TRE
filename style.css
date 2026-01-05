@@ -20,7 +20,7 @@
 
 /* Footer fixes: ensure horizontal layout and touch friendliness on Android */
 .pages-menu.bottom-pages {
-  z-index: 11000; /* on top of other elements */
+  z-index: 22000; /* ensure footer sits above other fixed elements */
   pointer-events: auto;
   flex-wrap: nowrap; /* keep items on a single row */
   -webkit-overflow-scrolling: touch;
@@ -41,6 +41,9 @@
   min-width: 0 !important;
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0,0,0,0.06);
+  position: relative;
+  z-index: 22001;
+  pointer-events: auto;
 }
 /* allow the footer to scroll horizontally if too many buttons */
 .pages-menu.bottom-pages { overflow-x: auto; }
