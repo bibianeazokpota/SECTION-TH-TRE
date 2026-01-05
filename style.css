@@ -18,6 +18,36 @@
   --btn-permission: #f4d35e;
 }
 
+/* Footer fixes: ensure horizontal layout and touch friendliness on Android */
+.pages-menu.bottom-pages {
+  z-index: 11000; /* on top of other elements */
+  pointer-events: auto;
+  flex-wrap: nowrap; /* keep items on a single row */
+  -webkit-overflow-scrolling: touch;
+  touch-action: manipulation;
+}
+.pages-menu.bottom-pages .left-actions,
+.pages-menu.bottom-pages .page-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+.pages-menu.bottom-pages button,
+.pages-menu.bottom-pages .btn,
+.pages-menu.bottom-pages select {
+  width: auto !important;
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.06);
+}
+/* allow the footer to scroll horizontally if too many buttons */
+.pages-menu.bottom-pages { overflow-x: auto; }
+
+/* slightly reduce select width so prev/next buttons remain visible */
+.pages-menu.bottom-pages .page-nav select { max-width: 120px; }
+
 /* Global box-sizing for predictable sizing on small screens */
 *, *::before, *::after {
   box-sizing: border-box;
