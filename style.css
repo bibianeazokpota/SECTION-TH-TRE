@@ -18,6 +18,11 @@
   --btn-permission: #f4d35e;
 }
 
+/* Global box-sizing for predictable sizing on small screens */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 [data-theme="dark"] {
   --bg: #0f1724;
   --card: #0b1220;
@@ -704,6 +709,28 @@ button.btn-permission { color: #222; font-weight:700; }
   }
 }
 
+/* Extra fixes for very small devices to prevent horizontal overflow */
+@media (max-width: 420px) {
+  body { overflow-x: hidden; }
+
+  main, .code-container, .card, .notebook, .sheet { margin-left: 8px; margin-right: 8px; }
+
+  .code-container { padding-left: 8px; padding-right: 8px; }
+
+  .pages-menu { gap: 6px; }
+  .pages-menu.bottom-pages { left: 6px; right: 6px; bottom: 6px; }
+
+  .pages-menu.bottom-pages .left-actions, .pages-menu.bottom-pages .page-nav { gap: 6px; }
+
+  .splash-logo { width: 64px; height: 64px; }
+
+  .sheet::before { display: none; }
+
+  /* Reduce large type/buttons slightly */
+  .topbar h2 { font-size: 16px; }
+  .card h3 { font-size: 15px; }
+}
+
 @media (max-width: 768px) {
 
   .card {
@@ -732,6 +759,39 @@ button.btn-permission { color: #222; font-weight:700; }
   .btn:active {
     transform: scale(0.98);
   }
+}
+
+/* Additional mobile fixes: remove large left notebook margin, reduce fixed paddings/min-widths */
+@media (max-width: 768px) {
+  /* Reduce the left 'cahier' margin so content fits on small screens */
+  main, .code-container, .card, .notebook, .sheet {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  /* Reduce heavy horizontal padding on code-container */
+  .code-container { padding: 6px 12px; }
+
+  /* Hide decorative left margin line on very small screens */
+  .sheet::before { display: none; }
+
+  /* Allow buttons inside cards to shrink and wrap */
+  .card .controls .btn { min-width: auto; padding: 8px 10px; }
+
+  /* Prevent selects and role badges from enforcing large min-width */
+  .sheet .role-select, .role-select { min-width: auto; max-width: 100%; }
+
+  /* Ensure topbar elements wrap and fit */
+  .topbar { padding: 10px 12px; gap: 8px; }
+
+  /* Slightly reduce splash logo on small screens */
+  .splash-logo { width: 80px; height: 80px; }
+
+  /* Modals already use percentage widths, ensure they respect margins */
+  .modal-card { width: calc(100% - 32px); max-width: 420px; }
+
+  /* Avoid horizontal overflow from background patterns */
+  body { background-size: auto, 100% 28px; }
 }
 
 @media (max-width: 768px) {
