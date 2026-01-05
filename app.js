@@ -176,6 +176,14 @@ function loadPages() {
 }
 
 function changePage(delta) {
+  // Prevent moving forward if not all members on the current page have a status
+  if (delta > 0) {
+    const check = allMembersMarked(currentPage);
+    if (!check.ok) {
+      showBanner('Marquez la présence de tous les membres avant d\'ouvrir la page suivante : ' + check.missing.join(', '), 'error', 5000);
+      return;
+    }
+  }
   const keys = Object.keys(pagesData).map(k => Number(k)).filter(n => !isNaN(n) && n > 0);
   let max = Math.max(1, ...(keys.length ? keys : [currentPage]));
   let next = currentPage + delta;
@@ -190,9 +198,29 @@ function changePage(delta) {
   reloadPage();
 }
 
+// Utility: returns {ok: boolean, missing: []}
+function allMembersMarked(pageNum) {
+  const page = pagesData[pageNum] || {};
+  const missing = membres.filter(n => {
+    const d = page[n];
+    return !d || !d.statut || d.statut === 'Aucun';
+  });
+  return { ok: missing.length === 0, missing };
+}
+
 function jumpToPage(val) {
   const p = Number(val);
   if (isNaN(p) || p < 1) return;
+  // If jumping forward, ensure current page members are all marked
+  if (p > currentPage) {
+    const check = allMembersMarked(currentPage);
+    if (!check.ok) {
+      showBanner('Marquez la présence de tous les membres avant de changer de page : ' + check.missing.join(', '), 'error', 5000);
+      // reset selector to current page if present
+      const sel = document.getElementById('pageSelector'); if (sel) sel.value = currentPage;
+      return;
+    }
+  }
   currentPage = p;
   if (!pagesData[currentPage]) pagesData[currentPage] = {};
   savePages();
