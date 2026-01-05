@@ -763,15 +763,19 @@ button.btn-permission { color: #222; font-weight:700; }
     z-index: 999;
   }
 
-  .pages-menu.bottom-pages .left-actions,
-  .pages-menu.bottom-pages .page-nav {
-    flex-direction: row;
-    justify-content: space-between;
+  /* Use a two-column grid so left-actions and page-nav never overlap */
+  .pages-menu.bottom-pages {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 8px;
   }
+
+  .pages-menu.bottom-pages .left-actions { justify-self: start; }
+  .pages-menu.bottom-pages .page-nav { justify-self: end; display:flex; gap:8px; align-items:center; }
 
   .pages-menu.bottom-pages button,
   .pages-menu.bottom-pages select {
-    flex: 1;
     min-height: 48px;
     font-size: 14px;
   }
