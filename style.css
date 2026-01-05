@@ -770,6 +770,29 @@ button.btn-permission { color: #222; font-weight:700; }
   .card h3 { font-size: 15px; }
 }
 
+/* Ensure controls stack and buttons fill width on narrow phones */
+@media (max-width: 600px) {
+  .card .controls {
+    flex-direction: column !important;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .card .controls .btn,
+  .card .controls button,
+  .pages-menu.bottom-pages .left-actions button,
+  .pages-menu.bottom-pages .page-nav button {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .role-row { flex-wrap: wrap; gap: 6px; }
+  .role-select { flex: 1 1 auto; min-width: 0; max-width: 100%; }
+
+  .sheet .role-select { min-width: auto; }
+}
+
 @media (max-width: 768px) {
 
   .card {
