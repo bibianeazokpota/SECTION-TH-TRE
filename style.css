@@ -703,6 +703,9 @@ button.btn-permission { color: #222; font-weight:700; }
 .pages-menu.bottom-pages .left-actions { display:flex; gap:8px; align-items:center; flex: 0 0 auto; }
 .pages-menu.bottom-pages .page-nav { display:flex; gap:8px; align-items:center; flex: 1 1 auto; justify-content: flex-end; }
 
+/* Hide duplicated textual page label (select shows current page) */
+.pages-menu.bottom-pages .page-nav #pageLabel { display: none; }
+
 #addMember,
 #resetData {
   padding: 10px 14px;

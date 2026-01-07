@@ -88,14 +88,14 @@
   <!-- PAGES (navigation fixe en bas) with actions -->
     <div class="pages-menu bottom-pages">
     <div class="left-actions">
-      <button id="addMember" class="btn btn-warning">+ Ajouter un membre</button>
-      <button id="resetData" class="btn btn-success">Réinitialiser</button>
+      <button id="addMember" type="button" class="btn btn-warning" aria-label="Ajouter un membre" title="Ajouter un membre">+ Ajouter un membre</button>
+      <button id="resetData" type="button" class="btn btn-success" aria-label="Réinitialiser la page" title="Réinitialiser la page">Réinitialiser</button>
     </div>
     <div class="page-nav">
-      <button class="btn btn-secondary" onclick="changePage(-1)">⬅ Page précédente</button>
-      <select id="pageSelector" onchange="jumpToPage(this.value)"></select>
-      <span id="pageLabel">Page 1</span>
-      <button class="btn btn-secondary" onclick="changePage(1)">Page suivante ➡</button>
+      <button id="prevPageBtn" type="button" class="btn btn-secondary" aria-label="Page précédente" title="Page précédente" onclick="changePage(-1)">⬅ Page précédente</button>
+      <select id="pageSelector" onchange="jumpToPage(this.value)" aria-label="Sélection de la page"></select>
+      <span id="pageLabel" aria-hidden="true">Page 1</span>
+      <button id="nextPageBtn" type="button" class="btn btn-secondary" aria-label="Page suivante" title="Page suivante" onclick="changePage(1)">Page suivante ➡</button>
     </div>
   </div>
 
