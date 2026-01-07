@@ -774,16 +774,17 @@ button.btn-permission { color: #222; font-weight:700; }
     z-index: 999;
   }
 
-  /* Use a two-column grid so left-actions and page-nav never overlap */
+  /* Stack actions above page navigation on narrow screens */
   .pages-menu.bottom-pages {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
     align-items: center;
     gap: 8px;
   }
 
-  .pages-menu.bottom-pages .left-actions { justify-self: start; }
-  .pages-menu.bottom-pages .page-nav { justify-self: end; display:flex; gap:8px; align-items:center; }
+  .pages-menu.bottom-pages .left-actions { justify-self: center; }
+  .pages-menu.bottom-pages .page-nav { justify-self: center; display:flex; gap:8px; align-items:center; }
 
   .pages-menu.bottom-pages button,
   .pages-menu.bottom-pages select {
