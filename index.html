@@ -123,6 +123,26 @@
     </div>
   </div>
 
+  <!-- INSTALL HELP MODAL -->
+  <div id="installHelp" class="modal hidden">
+    <div class="modal-card">
+      <h3>Installer l'application</h3>
+      <p id="installHelpText">Votre navigateur n'a pas fourni le dialogue d'installation (le prompt). Pour installer l'application : servez-la via <strong>localhost</strong> ou sur un site <strong>HTTPS</strong>. Voici quelques commandes utiles pour tester localement :</p>
+      <pre id="installCmds" style="background:#f3f3f3;padding:8px;border-radius:6px;overflow:auto;max-height:140px"># Node (http-server)
+npx http-server -c-1 -p 8080
+
+# Python 3
+python -m http.server 8000
+
+# Pour vérifier le service worker et le manifest, ouvrez DevTools → Application
+</pre>
+      <div class="modal-actions">
+        <button id="copyInstallCmds" class="btn">Copier les commandes</button>
+        <button id="closeInstallHelp" class="btn btn-danger">Fermer</button>
+      </div>
+    </div>
+  </div>
+
   <!-- JavaScript -->
   <script src="app.js?v=2"></script>
   <script>

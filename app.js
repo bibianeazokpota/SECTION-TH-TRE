@@ -51,27 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (installBtn) {
     installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) {
-        // diagnostics
-        const reasons = [];
-        if (location.protocol !== 'https:' && location.hostname !== 'localhost') reasons.push('Non servi en HTTPS');
-        if (!('serviceWorker' in navigator)) reasons.push('Service Worker non supporté');
-        else {
-          try {
-            const regs = await navigator.serviceWorker.getRegistrations();
-            if (!regs || regs.length === 0) reasons.push('Service Worker non enregistré');
-          } catch (e) { console.warn('Erreur vérif SW', e); reasons.push('Impossible de vérifier Service Worker'); }
-        }
-        try {
-          const res = await fetch('manifest.json', {cache: 'no-store'});
-          if (!res.ok) reasons.push('manifest.json manquant ou inaccessible');
-          else {
-            try { const mf = await res.json(); if (!mf || !mf.icons) reasons.push('Manifest: icônes manquantes'); } catch(e){ reasons.push('Manifest invalide'); }
-          }
-        } catch(e){ reasons.push('Impossible de charger manifest.json'); }
-
-        const message = 'Installation indisponible: ' + (reasons.length ? reasons.join(' • ') : 'Aucun prompt reçu par le navigateur');
-        console.warn('PWA install diagnostics:', reasons);
-        showBanner(message, 'error', 7000);
+        // show user-friendly instructions to enable installation
+        showInstallHelp();
         return;
       }
 
@@ -596,6 +577,34 @@ document.getElementById('confirmYes').addEventListener('click', confirmDeleteYes
 document.getElementById('confirmNo').addEventListener('click', ()=>{
   _pendingDelete = null;
   const m = document.getElementById('modalConfirm'); if (m) m.classList.add('hidden');
+});
+
+// Install help modal actions (copy & close)
+function showInstallHelp() {
+  const m = document.getElementById('installHelp');
+  if (!m) {
+    showBanner("Installation indisponible: le navigateur n'a pas fourni le prompt d'installation.", 'error', 5000);
+    return;
+  }
+  m.classList.remove('hidden');
+}
+
+function copyInstallCmds() {
+  const el = document.getElementById('installCmds');
+  if (!el) return;
+  const text = el.innerText || el.textContent || '';
+  navigator.clipboard && navigator.clipboard.writeText ? navigator.clipboard.writeText(text).then(()=>{
+    showBanner('Commandes copiées dans le presse-papiers', 'success', 2000);
+  }).catch(()=>{ showBanner('Impossible de copier — copiez manuellement', 'error', 2200); }) : (function(){
+    showBanner('API presse-papiers non disponible', 'error', 2200);
+  })();
+}
+
+const copyBtn = document.getElementById('copyInstallCmds');
+if (copyBtn) copyBtn.addEventListener('click', copyInstallCmds);
+const closeInstall = document.getElementById('closeInstallHelp');
+if (closeInstall) closeInstall.addEventListener('click', ()=>{
+  const m = document.getElementById('installHelp'); if (m) m.classList.add('hidden');
 });
 
 // ===============================
