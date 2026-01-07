@@ -26,12 +26,20 @@
   -webkit-overflow-scrolling: touch;
   touch-action: manipulation;
 }
-.pages-menu.bottom-pages .left-actions,
+.pages-menu.bottom-pages .left-actions { 
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  flex: 0 0 auto; /* prevent left actions from shrinking/expanding */
+}
 .pages-menu.bottom-pages .page-nav {
   display: flex;
   flex-direction: row;
   gap: 8px;
   align-items: center;
+  flex: 1 1 auto; /* allow page-nav to take remaining space */
+  justify-content: flex-end; /* keep nav buttons to the right */
 }
 .pages-menu.bottom-pages button,
 .pages-menu.bottom-pages .btn,
@@ -692,8 +700,8 @@ button.btn-permission { color: #222; font-weight:700; }
   gap: 12px;
   background: transparent;
 }
-.pages-menu.bottom-pages .left-actions { display:flex; gap:8px; align-items:center; }
-.pages-menu.bottom-pages .page-nav { display:flex; gap:8px; align-items:center; }
+.pages-menu.bottom-pages .left-actions { display:flex; gap:8px; align-items:center; flex: 0 0 auto; }
+.pages-menu.bottom-pages .page-nav { display:flex; gap:8px; align-items:center; flex: 1 1 auto; justify-content: flex-end; }
 
 #addMember,
 #resetData {
