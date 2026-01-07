@@ -53,6 +53,17 @@
   z-index: 22001;
   pointer-events: auto;
 }
+/* Make footer buttons wrap text instead of truncating and ensure readable sizing */
+.pages-menu.bottom-pages button,
+.pages-menu.bottom-pages .btn,
+.pages-menu.bottom-pages select {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.2 !important;
+  font-size: 15px !important;
+  padding: 10px 12px !important;
+}
 /* Touch-friendly sizing and predictable shrinking */
 .pages-menu.bottom-pages {
   display: flex;
@@ -801,8 +812,17 @@ button.btn-permission { color: #222; font-weight:700; }
     gap: 8px;
   }
 
-  .pages-menu.bottom-pages .left-actions { justify-self: center; }
-  .pages-menu.bottom-pages .page-nav { justify-self: center; display:flex; gap:8px; align-items:center; }
+  .pages-menu.bottom-pages .left-actions { justify-self: center; display:flex; flex-direction:column; gap:8px; width:100%; }
+  .pages-menu.bottom-pages .left-actions button, .pages-menu.bottom-pages .left-actions .btn { width:100%; box-sizing:border-box; }
+  .pages-menu.bottom-pages .page-nav { justify-self: center; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+  /* Allow nav buttons to shrink/wrap on small widths */
+  .pages-menu.bottom-pages .page-nav button, .pages-menu.bottom-pages .page-nav select {
+    min-width: 36%;
+    flex: 1 1 36%;
+    text-align: center;
+    white-space: normal !important;
+  }
 
   .pages-menu.bottom-pages button,
   .pages-menu.bottom-pages select {
