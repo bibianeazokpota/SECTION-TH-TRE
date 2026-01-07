@@ -53,6 +53,24 @@
   z-index: 22001;
   pointer-events: auto;
 }
+/* Touch-friendly sizing and predictable shrinking */
+.pages-menu.bottom-pages {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.pages-menu.bottom-pages button,
+.pages-menu.bottom-pages .btn,
+.pages-menu.bottom-pages select {
+  min-height: 44px; /* comfortable touch target */
+  padding: 10px 12px;
+  flex-shrink: 0 !important;
+}
+.pages-menu.bottom-pages select { appearance: none; -webkit-appearance: none; }
 /* allow the footer to scroll horizontally if too many buttons */
 .pages-menu.bottom-pages { overflow-x: auto; }
 
