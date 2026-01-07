@@ -39,7 +39,9 @@
   gap: 8px;
   align-items: center;
   flex: 1 1 auto; /* allow page-nav to take remaining space */
-  justify-content: flex-end; /* keep nav buttons to the right */
+  justify-content: center; /* center prev / selector / next */
+  flex-wrap: nowrap; /* keep the three controls on a single line */
+  white-space: nowrap;
 }
 .pages-menu.bottom-pages button,
 .pages-menu.bottom-pages .btn,
@@ -86,7 +88,18 @@
 .pages-menu.bottom-pages { overflow-x: auto; }
 
 /* slightly reduce select width so prev/next buttons remain visible */
-.pages-menu.bottom-pages .page-nav select { max-width: 120px; }
+.pages-menu.bottom-pages .page-nav select { max-width: 120px; min-width: 80px; }
+
+/* Ensure prev/next buttons remain readable and inline */
+#prevPageBtn, #nextPageBtn {
+  min-width: 72px;
+  max-width: 40%;
+  flex: 0 1 auto;
+  white-space: nowrap;
+}
+
+/* allow horizontal scroll on extreme narrow viewports rather than wrapping */
+.pages-menu.bottom-pages { overflow-x: auto; }
 
 /* Global box-sizing for predictable sizing on small screens */
 *, *::before, *::after {
