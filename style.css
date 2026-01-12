@@ -799,6 +799,26 @@ button.btn-permission { color: #222; font-weight:700; }
 #confirmMessage { color: var(--muted); margin-top: 6px; }
 #confirmTitle { margin: 0 0 6px 0; }
 
+/* Utility: global hidden helper (used by JS to toggle visibility) */
+.hidden { display: none !important; }
+
+/* Ensure bottom page navigation stays on one horizontal line on narrow screens */
+.pages-menu.bottom-pages .page-nav {
+  flex-wrap: nowrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Slightly reduce font-size on very narrow viewports so controls fit horizontally */
+@media (max-width: 420px) {
+  .pages-menu.bottom-pages .page-nav button,
+  .pages-menu.bottom-pages .page-nav select,
+  .pages-menu.bottom-pages .page-nav span {
+    font-size: 14px !important;
+    padding: 8px 10px !important;
+  }
+}
+
 /* =========================
    MOBILE APP NAVIGATION
 ========================= */
